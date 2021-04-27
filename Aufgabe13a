@@ -1,0 +1,62 @@
+import pandas as pd
+import plotly.express as px
+
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+
+app = dash.Dash(__name__)
+
+df = pd.read_csv("owid-covid-data.csv")
+
+
+app.layout = html.Div([
+    
+        
+    html.H1("Wieso?", style = {'text-align': 'center'}),
+    html.H4("Numbers and facts about Covid-19", style = {'text-align': 'left'}),
+
+    dcc.Dropdown(id='continent',
+                 options = [
+                     {"label": "Africa", "value": 'Africa'},
+                     {"label": "Asia", "value": 'Asia'},
+                     {"label": "Europe", "value": 'Europe'},
+                     {"label": "North America", "value": 'North America'},
+                     {"label": "Oceania", "value": 'Oceania'},
+                     {"label": "South America", "value": 'South America'}],
+                 multi = False,
+                 value='Europe',
+                 style = {"width": "40%"}),
+    
+        
+    dcc.Graph(id='covidplot', figure = {}),
+    html.Br(),
+    
+    dcc.Graph(id='covidplot2', figure = {})
+])
+
+@app.callback(
+    [Output(component_id='covidplot', component_property='figure'),
+     Output(component_id='covidplot2', component_property='figure')],
+    [Input(component_id='location', component_property='value')]
+)
+
+def update_graph(option_slctd):
+    dff = df.copy()
+    dff = dff[dff["location"] == option_slctd]
+    
+    
+# Plotly Express
+    fig = px.line(dff, x='date', y='new_cases')
+
+    fig2 = px.scatter(dff, x="new_cases", y="new_deaths", 
+                     color = "new_tests", size = "tests_per_case",
+                     marginal_x = "box", marginal_y = "violin", trendline = "ols")
+
+
+    return fig, fig2
+
+
+if __name__ == '__main__':
+    app.run_server(debug=True)
