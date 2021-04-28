@@ -1,5 +1,8 @@
-import pandas as pd
+import plotly as py
 import plotly.express as px
+import plotly.graph_objs as go
+
+import pandas as pd
 
 import dash
 import dash_core_components as dcc
@@ -14,8 +17,8 @@ df = pd.read_csv("https://raw.githubusercontent.com/owid/covid-19-data/master/pu
 app.layout = html.Div([
     
         
-    html.H1("Wieso?", style = {'text-align': 'center'}),
-    html.H4("Numbers and facts about Covid-19", style = {'text-align': 'left'}),
+    html.H1("Aufgabe 13a)", style = {'text-align': 'center'}),
+    html.H4("Dashboard mit Dropdown-Menü", style = {'text-align': 'left'}),
 
     dcc.Dropdown(id='continent',
                  options = [
@@ -48,7 +51,7 @@ def update_graph(option_slctd):
     
     
 # Plotly Express
-    fig = px.line(dff, x='date', y='new_cases')
+    fig = px.line(dff, x='date', y='new_cases', title='Zeitverlauf der Fälle')
 
     fig2 = px.scatter(dff, x="new_cases", y="new_deaths", 
                      color = "new_tests", size = "tests_per_case",
@@ -59,4 +62,4 @@ def update_graph(option_slctd):
 
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
