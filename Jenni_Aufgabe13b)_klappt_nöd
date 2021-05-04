@@ -1,0 +1,72 @@
+import pandas as pd
+import plotly.express as px
+
+import requests
+import io
+
+
+import numpy as np
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+
+
+
+app = dash.Dash(__name__)
+
+CSV_URL = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
+
+csv_data = requests.get(CSV_URL).content 
+
+df = pd.read_csv(io.StringIO(csv_data.decode('latin1')), sep=',')
+
+df.replace("", 0, inplace=True)
+df.replace(np.NaN, 0, inplace=True)
+
+app.layout = html.Div([
+    
+        
+    html.H1("Gruppe 4", style = {'text-align': 'center'}),
+    html.H4("Aufgabe 13b)", style = {'text-align': 'left'}),
+
+    dcc.Dropdown(id='continent',
+                 options = [
+                     {"label": "Africa", "value": 'Africa'},
+                     {"label": "Asia", "value": 'Asia'},
+                     {"label": "Europe", "value": 'Europe'},
+                     {"label": "North America", "value": 'North America'},
+                     {"label": "Oceania", "value": 'Oceania'},
+                     {"label": "South America", "value": 'South America'}],
+                 multi = False,
+                 value= 'Europe',
+                 style = {"width": "40%"}),
+        
+    dcc.Graph(id='covidplot', figure = {})
+])
+
+@app.callback(
+    [Output(component_id='covidplot', component_property='figure')],
+    [Input(component_id='continent', component_property='value')]
+)
+
+def update_graph(option_slctd):
+    dff = df.copy()
+    
+
+    dff = dff[dff['continent'] == option_slctd]
+ 
+    
+# Plotly Express
+
+    fig = px.scatter(dff, x="new_cases", y="new_deaths", 
+                     color = "location", size = "gdp_per_capita",
+                     marginal_x = "box", marginal_y = "box", trendline = "ols")
+
+
+    return fig
+
+
+if __name__ == '__main__':
+    app.run_server(debug=False)
+
