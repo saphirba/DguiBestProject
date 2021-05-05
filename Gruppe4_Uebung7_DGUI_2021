@@ -1,0 +1,106 @@
+import pandas as pd
+import plotly.express as px
+
+import requests
+import io
+
+
+import numpy as np
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+
+
+#Quellen
+#https://www.it-swarm.com.de/de/python/so-ersetzen-sie-negative-zahlen-pandas-data-frame-durch-null/1049907456/
+
+app = dash.Dash(__name__)
+
+CSV_URL = 'https://covid.ourworldindata.org/data/owid-covid-data.csv'
+
+csv_data = requests.get(CSV_URL).content 
+
+df = pd.read_csv(io.StringIO(csv_data.decode('latin1')), sep=',')
+
+
+df.replace("", 0, inplace=True)
+df.replace(np.NaN, 0, inplace=True)
+
+
+#negative Werte durch 0 ersetzen
+num = df._get_numeric_data()
+num[num < 0] = 0
+
+app.layout = html.Div([
+    
+        
+    html.H1("Aufgabenblatt 7 - Gruppe 4", style = {'text-align': 'center'}),
+    html.H4("Numbers and facts about Covid-19", style = {'text-align': 'left'}),
+
+    dcc.Dropdown(id='continent',
+                 options = [
+                     {"label": "Africa", "value": 'Africa'},
+                     {"label": "Asia", "value": 'Asia'},
+                     {"label": "Europe", "value": 'Europe'},
+                     {"label": "North America", "value": 'North America'},
+                     {"label": "Oceania", "value": 'Oceania'},
+                     {"label": "South America", "value": 'South America'}],
+                 multi = False,
+                 value='Europe',
+                 style = {"width": "40%"}),
+    
+    html.H4("scatter plot chart", style = {'text-align': 'left'}),
+    html.Br(),
+    
+    dcc.Graph(id='covidplot', figure = {}),
+    html.Br(),
+    
+    html.H1("Aufgabe 14a)", style = {'text-align': 'left'}),
+    html.Br(),
+    
+    html.H4("line chart", style = {'text-align': 'left'}),
+    html.Br(),
+    
+    dcc.Graph(id='covidplot2', figure = {}),
+    html.Br(),
+    
+    
+    html.H4("bar chart", style = {'text-align': 'left'}),
+    html.Br(),
+    
+    dcc.Graph(id='covidplot3', figure = {})
+])
+@app.callback(
+    [Output(component_id='covidplot', component_property='figure'),
+     Output(component_id='covidplot2', component_property='figure'),
+     Output(component_id='covidplot3', component_property='figure')],
+    [Input(component_id='continent', component_property='value')]
+)
+
+def update_graph(option_slctd):
+    dff = df.copy()
+    dff = dff[dff["continent"] == option_slctd]
+    
+    
+# Plotly Express
+    
+    fig = px.scatter(dff, x="new_cases", y="new_deaths", 
+                     color = "location", size = "gdp_per_capita",
+                     marginal_x = "box", marginal_y = "box", trendline = "ols")
+    
+    
+    
+    fig2 = px.line(dff, x='date', y='new_cases')
+    
+   
+    
+    fig3 = px.bar(dff, x="date", y="total_cases", color="location", barmode="group")
+
+
+    return fig, fig2, fig3
+
+if __name__ == '__main__':
+    app.run_server(debug=False)
+
+
