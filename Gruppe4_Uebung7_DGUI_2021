@@ -91,16 +91,17 @@ def update_graph(option_slctd):
     
     
     
-    fig2 = px.line(dff, x='date', y='new_cases')
+    fig2 = px.line(dff, x='date', y='new_cases', color="location")
     
    
     
-    fig3 = px.bar(dff, x="date", y="total_cases", color="location", barmode="group")
-
+    fig3 = px.bar(dff, x="date", y="total_cases", color="location")
+    
 
     return fig, fig2, fig3
 
 if __name__ == '__main__':
     app.run_server(debug=False)
+
 
 
