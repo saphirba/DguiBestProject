@@ -52,6 +52,8 @@ app.layout = html.Div(children = [
           
     #Dropdown für location, hier kann entweder ein einzelnes Land oder auch ein ganzer Kontinent gewählt werden
     #man kann auch World eingeben und sieht die Daten für die ganze Welt 
+    #würden gerne zwei Dropdowns einfügen. Ein Dropdown um den Kontinent auszuwählen und ein Dropdown um das Land auszuwählen.
+    #Im zweiten Dropdown sollten dann, nur die Länder aufgelistet werden, die zum ausgewählten Kontinent gehören. Hat leider noch nicht geklappt.
             
             html.Div(children = [ 
                     html.H3("Chose a continent or a country", style={'color':'white'}),
@@ -140,6 +142,7 @@ def update_graph(option_slctd, start_date, end_date):
     fig3 = px.choropleth(df, locations="iso_code",
                     color="total_vaccinations",
                     hover_name="location",
+                    #Stimmt das  Datum?
                     animation_frame="date",
                     title = "Vaccine doses distributed",
                     color_continuous_scale=px.colors.sequential.YlGn)
@@ -147,7 +150,8 @@ def update_graph(option_slctd, start_date, end_date):
 
 #Streudiagramm
 #Hypothese Nummer 5: Je mehr positiv getestete Menschen umso mehr Hospitalisierungen
-#Problem: hosp_patients sind irgendwie immer bi 0
+#Wird noch nicht ganz richtig angezeigt
+#Problem: hosp_patients sind irgendwie immer bei 0
     fig4 = px.scatter(df2, x="positive_rate", y="hosp_patients", 
                      color = "hosp_patients", size = "positive_rate", hover_data = ['date'],
                      trendline = "ols",
