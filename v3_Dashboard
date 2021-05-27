@@ -47,7 +47,7 @@ num[num < 0] = 0
 app.layout = html.Div(children = [    
         
     html.H2("Covid-19 Dashboard - GRUPPE 4", 
-            style = {'text-align': 'center', 'color': 'white', 'padding': '10px'}),
+            style = {'text-align': 'center', 'color': 'white', 'padding': '10px', 'background-color': '#a7d6ab'}),
     
     
 
