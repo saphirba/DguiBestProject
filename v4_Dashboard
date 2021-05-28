@@ -163,7 +163,7 @@ def update_graph(option_slctd, start_date, end_date):
 #Balkendiagramm
     fig = px.bar(df2, x="date", y="total_cases", color="location",
                  title = "Total cases for "+option_slctd)
-    fig.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="white", margin=dict(pad=8))
+    fig.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="#6D7993", margin=dict(pad=8))
     fig.update_yaxes(title=None)
     fig.update_xaxes(title=None)
 
@@ -174,7 +174,7 @@ def update_graph(option_slctd, start_date, end_date):
     fig2 = px.line(df2, x='date', 
                   y=['new_cases','new_deaths','new_vaccinations'],
             title = "Line Graphs for Several Relevant Attributes for "+option_slctd)
-    fig2.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="white")
+    fig2.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="#6D7993")
     fig2.update_yaxes(title=None)
     fig2.update_xaxes(title=None)
 
@@ -185,7 +185,7 @@ def update_graph(option_slctd, start_date, end_date):
                     hover_name="location",
                     title = "Vaccine doses distributed",
                     color_continuous_scale=px.colors.sequential.YlGn)
-    fig3.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", geo=dict(bgcolor="#cbcbcb"), font_color="white", margin={"r":0,"t":0,"l":0,"b":0})
+    fig3.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", geo=dict(bgcolor="#cbcbcb"), font_color="#6D7993", margin={"r":0,"t":0,"l":0,"b":0})
 
 
 
@@ -196,7 +196,7 @@ def update_graph(option_slctd, start_date, end_date):
                      color = "location", size = "positive_rate", hover_data = ['date'],
                      trendline = "ols",
                      title = "Correlations between positive_rate and hosp_patients "+option_slctd)
-    fig4.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="white")
+    fig4.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="#6D7993")
     fig4.update_yaxes(title=None)
     fig4.update_xaxes(title="positive rate")
 
