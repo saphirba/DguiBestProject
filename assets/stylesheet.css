@@ -4,11 +4,12 @@
 }
 
 body {
-  background-color: #3F3F3f;
-  color: #DfDCDA;
+  background-color: #858482;
+  color: white;
   font-family: Lato;
   margin: 0;
   padding: 0;
+  margin-bottom: 40px;
 }
 
 h1 {
@@ -23,22 +24,28 @@ h3 {
 
 .container {
   position: relative;
-  /*max-width: 1200px;
-  margin: 0 auto; */
-  padding: 0 1rem;
+  padding: 0rem;
 }
 
 .header {
+    padding-top: 10px;
+    text-align: center;
+    
+    color: whitesmoke;
+    letter-spacing: 0.1em;
 
 }
 
 .footer {
-  margin-top: 2rem;
-  margin-bottom: 1rem;
-  font-size: 0.8rem;
+  margin-top: 30px;
+  padding: 40px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: 1rem;
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  background: #cbcbcb;
 }
 
 .graph-container {
