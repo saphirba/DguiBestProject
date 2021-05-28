@@ -134,12 +134,8 @@ app.layout = html.Div(children = [
     #footer mit Infos zum Projekt
     html.Div(children = [
         html.Div(children = [
-            html.Div("Gruppe 4"),
-            html.Div("Sarah Röllin, Jennifer Amoroso, Nina Ingold, Kerstin Schneider")
-        ]),
-        html.Div(children = [
-            html.Div("Dieses Dashboard wurde für das Modul DGUI an der FHGR entwickelt."),
-            html.Div("Als Datengrundlage dienen die Covid-Daten von ourworldindata.org.")
+            html.Div("Dieses Dashboard ist ausschliesslich zur Übung für eine Erstellung eines dynamischen User Interfaces angedacht. Bitte um Geduld beim Laden der Daten! Die Filterung kann jeweils im oberen Bereich definiert werden und jedes einzelne Diagramm hat weitere Zoom Möglichkeiten. Umso stärker die Farbe wird, umso grösser wird die entsprechende Zahl. Falls der Wert auf 0 steht, bedeutet dies, dass es aus der Datenquelle keine Daten gibt!"),
+            html.Div("Als Datengrundlage dient der Covid-19 Datensatz von ourworldindata.org.")
         ])
     ], className="footer"),
 ], className="container")  
@@ -172,11 +168,11 @@ def update_graph(option_slctd, start_date, end_date):
     fig.update_xaxes(title=None)
 
 
+
 #Liniendiagramm
 #Hypothese 1: Inselstaaten hatten einen späteren Pandemiebeginn als das Festland
     fig2 = px.line(df2, x='date', 
-                  y=['new_cases','new_deaths','new_vaccinations',
-                     'total_vaccinations_per_hundred'],
+                  y=['new_cases','new_deaths','new_vaccinations'],
             title = "Line Graphs for Several Relevant Attributes for "+option_slctd)
     fig2.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="white")
     fig2.update_yaxes(title=None)
@@ -197,7 +193,7 @@ def update_graph(option_slctd, start_date, end_date):
 #Hypothese Nummer 5: Je mehr positiv getestete Menschen umso mehr Hospitalisierungen
 #Problem: Nicht jedes Land hat hierzu Daten
     fig4 = px.scatter(df2, x="positive_rate", y="hosp_patients", 
-                     color = "hosp_patients", size = "positive_rate", hover_data = ['date'],
+                     color = "location", size = "positive_rate", hover_data = ['date'],
                      trendline = "ols",
                      title = "Correlations between positive_rate and hosp_patients "+option_slctd)
     fig4.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="white")
