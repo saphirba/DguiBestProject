@@ -168,6 +168,7 @@ def update_graph(option_slctd, start_date, end_date, option_slctd1):
     df1 = dff[dff["continent"] == option_slctd]
     df2 = df1[(df1['date'] >= start_date)&(df1['date']<= end_date)]
     df3 = dff[dff["location"] == option_slctd1]
+    df4 = df3[(df3['date'] >= start_date)&(df3['date']<= end_date)]
    
 
     
@@ -183,7 +184,7 @@ def update_graph(option_slctd, start_date, end_date, option_slctd1):
 
 #Liniendiagramm
 #Hypothese 1: Inselstaaten hatten einen späteren Pandemiebeginn als das Festland
-    fig2 = px.line(df3, x='date', 
+    fig2 = px.line(df4, x='date', 
                   y=['new_cases','new_deaths','new_tests',
                      'new_vaccinations', 'handwashing_facilities'])
     fig2.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="#6D7993")
