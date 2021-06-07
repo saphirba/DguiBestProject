@@ -210,7 +210,7 @@ def update_graph(option_slctd, start_date, end_date, option_slctd1):
                      color = "location", size = "positive_rate", hover_data = ['date'],
                      trendline = "ols")
     fig4.update_layout(plot_bgcolor="#cbcbcb", paper_bgcolor="#cbcbcb", font_color="#6D7993")
-    fig4.update_yaxes(title=None)
+    fig4.update_yaxes(title="hospitalized patients")
     fig4.update_xaxes(title="positive rate")
 
 
